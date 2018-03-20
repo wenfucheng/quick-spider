@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <classPathEntry
+            location="F:\develop\maven\repository\mysql\mysql-connector-java\5.1.41\mysql-connector-java-5.1.41.jar"/>
+
+    <context id="context1" targetRuntime="MyBatis3">
+        <!-- JavaBean 实现 序列化 接口 -->
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin">
+        </plugin>
+        <!-- 消除插件自动生成的垃圾注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.1.10:3306/lol_test?useUnicode=true&amp;characterEncoding=UTF-8"
+                        userId="foms" password="Fangxuele456!@#">
+        </jdbcConnection>
+
+        <!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer true，把JDBC DECIMAL 和
+            NUMERIC 类型解析为java.math.BigDecimal -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+
+        <!-- Model文件保存位置 -->
+        <javaModelGenerator targetPackage="com.fangxuele.spiderproject.domain"
+                            targetProject="F:\intelliJ_workspace\spider-project\src\main\java\">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+            <!-- 从数据库返回的值被清理前后的空格 -->
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成的mapper文件 -->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="F:\intelliJ_workspace\spider-project\src\main\resources\">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成的查询条件的类 -->
+        <javaClientGenerator targetPackage="com.fangxuele.spiderproject.mapper"
+                             targetProject="F:\intelliJ_workspace\spider-project\src\main\java\"
+                             type="XMLMAPPER">
+            <!-- enableSubPackages:是否让schema作为包的后缀 -->
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 需要连接的表,可以同时指定多个table,即生成多个mapper domainObjectName="TArea" -->
+        <table schema="" tableName="t_dangdang_comment"
+               enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
+
+        <!-- 有些表的字段需要指定java类型  -->
+        <!--<table schema="" tableName="">
+            <columnOverride column="" javaType="" />
+        </table>-->
+    </context>
+</generatorConfiguration>

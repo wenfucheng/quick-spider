@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangxuele.spiderproject.mapper.TBookCommentMapper">
+  <resultMap id="BaseResultMap" type="com.fangxuele.spiderproject.domain.TBookComment">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="book_id" jdbcType="BIGINT" property="bookId" />
+    <result column="customer_id" jdbcType="BIGINT" property="customerId" />
+    <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_image" jdbcType="VARCHAR" property="customerImage" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="star" jdbcType="TINYINT" property="star" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="source" jdbcType="TINYINT" property="source" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, book_id, customer_id, customer_name, customer_image, content, star, status, source, 
+    create_time, update_time
+  </sql>
+  <sql id="Comment_Column_List">
+    tbc.id, tbc.book_id, tbc.customer_id, tbc.customer_name, tbc.customer_image, tbc.content, tbc.star, tbc.status, tbc.create_time,
+    tbc.update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_book_comment
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_book_comment
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fangxuele.spiderproject.domain.TBookComment">
+    insert into t_book_comment (id, book_id, customer_id, 
+      customer_name, customer_image, content, 
+      star, status, source, 
+      create_time, update_time)
+    values (#{id,jdbcType=BIGINT}, #{bookId,jdbcType=BIGINT}, #{customerId,jdbcType=BIGINT}, 
+      #{customerName,jdbcType=VARCHAR}, #{customerImage,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{star,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, #{source,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fangxuele.spiderproject.domain.TBookComment">
+    insert into t_book_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="customerId != null">
+        customer_id,
+      </if>
+      <if test="customerName != null">
+        customer_name,
+      </if>
+      <if test="customerImage != null">
+        customer_image,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="star != null">
+        star,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null">
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerImage != null">
+        #{customerImage,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        #{star,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fangxuele.spiderproject.domain.TBookComment">
+    update t_book_comment
+    <set>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=BIGINT},
+      </if>
+      <if test="customerId != null">
+        customer_id = #{customerId,jdbcType=BIGINT},
+      </if>
+      <if test="customerName != null">
+        customer_name = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerImage != null">
+        customer_image = #{customerImage,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="star != null">
+        star = #{star,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fangxuele.spiderproject.domain.TBookComment">
+    update t_book_comment
+    set book_id = #{bookId,jdbcType=BIGINT},
+      customer_id = #{customerId,jdbcType=BIGINT},
+      customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_image = #{customerImage,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      star = #{star,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      source = #{source,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="getCommentByBookId" parameterType="long" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_book_comment t
+        where t.book_id = #{bookId}
+        AND t.status = 20
+    </select>
+    <select id="getBookGoodRatingByBookId" parameterType="string" resultType="string">
+    SELECT
+      count(*)/c.total
+    FROM
+      t_book_comment t,
+      ( SELECT
+          count(*) total
+        FROM
+          t_book_comment
+        WHERE
+          book_id = #{bookId}) c
+    WHERE
+      t.book_id = #{bookId}
+      AND t.star &gt; 3;
+  </select>
+    <select id="getCommentList" parameterType="map" resultType="map">
+        select
+        <include refid="Comment_Column_List"/>,
+        tb.image,tb.title
+        from t_book_comment tbc
+        LEFT JOIN t_book tb ON tbc.book_id = tb.id
+        where 1=1
+        <if test="bookTitle != null">
+            AND tb.title LIKE #{bookTitle}
+        </if>
+        <if test="customerName != null">
+            AND tbc.customer_name LIKE #{customerName}
+        </if>
+        <if test="content != null">
+            AND tbc.content LIKE #{content}
+        </if>
+        <if test="star != null">
+            AND tbc.star = #{star}
+        </if>
+        <if test="status != null">
+            and tbc.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="dateFrom != null">
+            and tbc.create_time &gt;= #{dateFrom,jdbcType=TIMESTAMP}
+        </if>
+        <if test="dateTo != null">
+            and tbc.create_time &lt; #{dateTo,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY ${orderBy}
+    </select>
+    <select id="selectByCustomerIdAndBookId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_book_comment
+        where customer_id = #{customerId,jdbcType=BIGINT}
+        AND book_id = #{bookId,jdbcType=BIGINT}
+        AND status != 99
+    </select>
+</mapper>

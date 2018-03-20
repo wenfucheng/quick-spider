@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fangxuele.spiderproject.mapper.TBookMapper">
+    <resultMap id="BaseResultMap" type="com.fangxuele.spiderproject.domain.TBook">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="category_id" jdbcType="BIGINT" property="categoryId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="subtitle" jdbcType="VARCHAR" property="subtitle"/>
+        <result column="customize_title" jdbcType="VARCHAR" property="customizeTitle"/>
+        <result column="isbn" jdbcType="VARCHAR" property="isbn"/>
+        <result column="image" jdbcType="VARCHAR" property="image"/>
+        <result column="large_image" jdbcType="VARCHAR" property="largeImage"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="translator" jdbcType="VARCHAR" property="translator"/>
+        <result column="summary" jdbcType="VARCHAR" property="summary"/>
+        <result column="catalog" jdbcType="VARCHAR" property="catalog"/>
+        <result column="douban_rating" jdbcType="DECIMAL" property="doubanRating"/>
+        <result column="publisher" jdbcType="VARCHAR" property="publisher"/>
+        <result column="pubdate" jdbcType="VARCHAR" property="pubdate"/>
+        <result column="pages" jdbcType="INTEGER" property="pages"/>
+        <result column="binding" jdbcType="VARCHAR" property="binding"/>
+        <result column="price" jdbcType="DECIMAL" property="price"/>
+        <result column="alt_url" jdbcType="VARCHAR" property="altUrl"/>
+        <result column="creator_id" jdbcType="BIGINT" property="creatorId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, category_id, title, subtitle, customize_title, isbn, image, large_image, author, 
+    translator, summary, catalog, douban_rating, publisher, pubdate, pages, binding, 
+    price, alt_url, create_time, update_time
+  </sql>
+    <sql id="Book_Column_List">
+        b.id, b.category_id, b.title, b.subtitle, b.customize_title, b.isbn, b.image, b.large_image, b.author, b.translator, b.summary,
+        b.catalog, b.douban_rating, b.publisher, b.pubdate, b.pages, b.binding, b.price, b.alt_url, b.create_time, b.update_time
+    </sql>
+    <sql id="Book_Info_Column_List">
+        bi.images, bi.is_multipart, bi.volume,bc.id suit_age_id, bc.name suit_age, bi.hot, bi.borrow_times, bi.day_rent, bi.volume,
+        bi.period_rent, bi.relet_rent, bi.borrower_cycle, bi.keyword, bi.storage_count, bi.sku, bi.storage, bi.remark, bi.status
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_book
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selectBookDetailMapByPrimaryKey" parameterType="java.lang.Long" resultType="map">
+        select
+        <include refid="Book_Column_List"/>,
+        <include refid="Book_Info_Column_List"/>
+        from t_book b
+        LEFT JOIN t_book_info bi ON b.id = bi.book_id
+        LEFT JOIN t_book_category bc on bi.suit_age = bc.id
+        where b.id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.fangxuele.spiderproject.domain.TBook" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+    insert into t_book (id, category_id, title, 
+      subtitle, customize_title, isbn, 
+      image, large_image, author, 
+      translator, summary, catalog, 
+      douban_rating, publisher, pubdate, 
+      pages, binding, price, 
+      alt_url, creator_id, create_time, 
+      update_time)
+    values (#{id,jdbcType=BIGINT}, #{categoryId,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, 
+      #{subtitle,jdbcType=VARCHAR}, #{customizeTitle,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{largeImage,jdbcType=VARCHAR}, #{author,jdbcType=VARCHAR}, 
+      #{translator,jdbcType=VARCHAR}, #{summary,jdbcType=VARCHAR}, #{catalog,jdbcType=VARCHAR}, 
+      #{doubanRating,jdbcType=DECIMAL}, #{publisher,jdbcType=VARCHAR}, #{pubdate,jdbcType=VARCHAR}, 
+      #{pages,jdbcType=INTEGER}, #{binding,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{altUrl,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+    <insert id="insertSelective" parameterType="com.fangxuele.spiderproject.domain.TBook">
+        insert into t_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="categoryId != null">
+                category_id,
+            </if>
+            <if test="title != null">
+                title,
+            </if>
+            <if test="subtitle != null">
+                subtitle,
+            </if>
+            <if test="customizeTitle != null">
+                customize_title,
+            </if>
+            <if test="isbn != null">
+                isbn,
+            </if>
+            <if test="image != null">
+                image,
+            </if>
+            <if test="largeImage != null">
+                large_image,
+            </if>
+            <if test="author != null">
+                author,
+            </if>
+            <if test="translator != null">
+                translator,
+            </if>
+            <if test="summary != null">
+                summary,
+            </if>
+            <if test="catalog != null">
+                catalog,
+            </if>
+            <if test="doubanRating != null">
+                douban_rating,
+            </if>
+            <if test="publisher != null">
+                publisher,
+            </if>
+            <if test="pubdate != null">
+                pubdate,
+            </if>
+            <if test="pages != null">
+                pages,
+            </if>
+            <if test="binding != null">
+                binding,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="altUrl != null">
+                alt_url,
+            </if>
+            <if test="creatorId != null">
+                creator_id,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="categoryId != null">
+                #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="customizeTitle != null">
+                #{customizeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="isbn != null">
+                #{isbn,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="largeImage != null">
+                #{largeImage,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="translator != null">
+                #{translator,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="catalog != null">
+                #{catalog,jdbcType=VARCHAR},
+            </if>
+            <if test="doubanRating != null">
+                #{doubanRating,jdbcType=DECIMAL},
+            </if>
+            <if test="publisher != null">
+                #{publisher,jdbcType=VARCHAR},
+            </if>
+            <if test="pubdate != null">
+                #{pubdate,jdbcType=VARCHAR},
+            </if>
+            <if test="pages != null">
+                #{pages,jdbcType=INTEGER},
+            </if>
+            <if test="binding != null">
+                #{binding,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="altUrl != null">
+                #{altUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.fangxuele.spiderproject.domain.TBook">
+        update t_book
+        <set>
+            <if test="categoryId != null">
+                category_id = #{categoryId,jdbcType=BIGINT},
+            </if>
+            <if test="title != null">
+                title = #{title,jdbcType=VARCHAR},
+            </if>
+            <if test="subtitle != null">
+                subtitle = #{subtitle,jdbcType=VARCHAR},
+            </if>
+            <if test="customizeTitle != null">
+                customize_title = #{customizeTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="isbn != null">
+                isbn = #{isbn,jdbcType=VARCHAR},
+            </if>
+            <if test="image != null">
+                image = #{image,jdbcType=VARCHAR},
+            </if>
+            <if test="largeImage != null">
+                large_image = #{largeImage,jdbcType=VARCHAR},
+            </if>
+            <if test="author != null">
+                author = #{author,jdbcType=VARCHAR},
+            </if>
+            <if test="translator != null">
+                translator = #{translator,jdbcType=VARCHAR},
+            </if>
+            <if test="summary != null">
+                summary = #{summary,jdbcType=VARCHAR},
+            </if>
+            <if test="catalog != null">
+                catalog = #{catalog,jdbcType=VARCHAR},
+            </if>
+            <if test="doubanRating != null">
+                douban_rating = #{doubanRating,jdbcType=DECIMAL},
+            </if>
+            <if test="publisher != null">
+                publisher = #{publisher,jdbcType=VARCHAR},
+            </if>
+            <if test="pubdate != null">
+                pubdate = #{pubdate,jdbcType=VARCHAR},
+            </if>
+            <if test="pages != null">
+                pages = #{pages,jdbcType=INTEGER},
+            </if>
+            <if test="binding != null">
+                binding = #{binding,jdbcType=VARCHAR},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DECIMAL},
+            </if>
+            <if test="altUrl != null">
+                alt_url = #{altUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                creator_id = #{creatorId,jdbcType=BIGINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.fangxuele.spiderproject.domain.TBook">
+    update t_book
+    set category_id = #{categoryId,jdbcType=BIGINT},
+      title = #{title,jdbcType=VARCHAR},
+      subtitle = #{subtitle,jdbcType=VARCHAR},
+      customize_title = #{customizeTitle,jdbcType=VARCHAR},
+      isbn = #{isbn,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      large_image = #{largeImage,jdbcType=VARCHAR},
+      author = #{author,jdbcType=VARCHAR},
+      translator = #{translator,jdbcType=VARCHAR},
+      summary = #{summary,jdbcType=VARCHAR},
+      catalog = #{catalog,jdbcType=VARCHAR},
+      douban_rating = #{doubanRating,jdbcType=DECIMAL},
+      publisher = #{publisher,jdbcType=VARCHAR},
+      pubdate = #{pubdate,jdbcType=VARCHAR},
+      pages = #{pages,jdbcType=INTEGER},
+      binding = #{binding,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      alt_url = #{altUrl,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="selectByIsbn" parameterType="string" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from t_book
+        where isbn = #{isbn,jdbcType=BIGINT}
+    </select>
+    <select id="getBookList" parameterType="map"
+            resultType="map">
+        SELECT
+        <include refid="Book_Column_List"/>,
+        <include refid="Book_Info_Column_List"/>,
+        tsu.nick_name
+        FROM t_book b
+        LEFT JOIN t_book_info bi ON bi.book_id = b.id
+        LEFT JOIN t_sys_user tsu ON b.creator_id = tsu.id
+        LEFT JOIN t_book_category bc on bi.suit_age = bc.id
+        where 1=1
+        <if test="bookName == null and isbn == null and category == null and suiteAge==null and creator==null and status==null and dateFrom==null and dateTo==null">
+            AND bi.status &lt; 99
+        </if>
+        <if test="bookName != null">
+            AND b.title LIKE #{bookName}
+        </if>
+        <if test="isbn != null">
+            AND b.isbn = #{isbn}
+        </if>
+        <if test="bookId != null">
+            AND b.id = #{bookId}
+        </if>
+        <if test="category != null">
+            AND b.category_id = #{category}
+        </if>
+        <if test="suiteAge != null">
+            AND bi.suit_age = #{suiteAge}
+        </if>
+        <if test="creator != null">
+            AND tsu.id = #{creator}
+        </if>
+        <if test="storage != null and storage==1">
+            and bi.storage &gt; 0
+        </if>
+        <if test="storage != null and storage==0">
+            and bi.storage &lt;= 0
+        </if>
+        <if test="sku != null and sku==1">
+            and bi.sku &gt; 0
+        </if>
+        <if test="sku != null and sku==0">
+            and bi.sku &lt;= 0
+        </if>
+        <if test="status != null">
+            and bi.status = #{status,jdbcType=INTEGER}
+        </if>
+        <if test="dateFrom != null">
+            and b.create_time &gt;= #{dateFrom,jdbcType=TIMESTAMP}
+        </if>
+        <if test="dateTo != null">
+            and b.create_time &lt; #{dateTo,jdbcType=TIMESTAMP}
+        </if>
+        ORDER BY ${orderBy}
+    </select>
+    <select id="getBookInfoByIds" parameterType="list" resultType="map">
+        SELECT
+        t.id,
+        t.image,
+        t.title,
+        t.isbn,
+        c.name categoryString,
+        c2.name suitAge,
+        t.create_time createTime,
+        i.status,
+        i.storage_count count,
+        i.sku
+        FROM t_book t
+        INNER JOIN t_book_info i ON t.id = i.book_id
+        INNER JOIN t_book_category c on t.category_id = c.id
+        INNER JOIN t_book_category c2 on i.suit_age = c2.id
+        WHERE t.id IN
+        <foreach collection="bookIds" item="bookId" open="(" separator="," close=")">
+            #{bookId}
+        </foreach>
+    </select>
+    <select id="getIsbnsByBookIds" parameterType="list" resultType="string">
+        SELECT isbn
+        FROM t_book
+        WHERE id IN
+        <foreach collection="bookIds" item="bookId" open="(" separator="," close=")">
+            #{bookId}
+        </foreach>
+    </select>
+    <select id="selectAllCreator" resultType="map">
+        SELECT
+        DISTINCT tb.creator_id,tsu.nick_name
+        FROM t_book tb
+        LEFT JOIN t_sys_user tsu ON tb.creator_id=tsu.id
+    </select>
+    <select id="getPriceByBookIds" parameterType="list" resultType="bigdecimal">
+        SELECT sum(price)
+        FROM t_book t
+        WHERE t.id IN
+        <foreach collection="bookIds" open="(" separator="," close=")" item="bookId">
+            #{bookId}
+        </foreach>
+    </select>
+    <select id="getCountByCategoryId" parameterType="long" resultType="long">
+        SELECT count(*)
+        FROM t_book t
+        WHERE t.category_id = #{categoryId}
+    </select>
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        t.*
+        from t_book t INNER JOIN t_book_info tbi ON t.id = tbi.book_id
+        WHERE tbi.status != 99
+    </select>
+    <select id="selectMaxBookId" resultType="long">
+        SELECT id
+        FROM t_book
+        ORDER BY id DESC
+        LIMIT 1
+    </select>
+</mapper>
